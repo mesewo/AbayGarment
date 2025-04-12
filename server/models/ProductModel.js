@@ -5,14 +5,14 @@ const productSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'User', //  If you have a User model
+      ref: 'User', // Reference to the User model
     },
     name: {
       type: String,
       required: true,
     },
     image: {
-      type: String,
+      type: String, // Cloudinary URL
       required: true,
     },
     category: {

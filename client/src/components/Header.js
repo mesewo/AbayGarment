@@ -1,79 +1,89 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import './Header.css'; // Import the Header.css file
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logout } from '../actions/userActions';
-import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import ErrorBoundary from './ErrorBoundary'; //  Adjust path
 
 const Header = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const userLogin = useSelector((state) => state.userLogin) || {}; // Ensure a default fallback
-  const { userInfo } = userLogin; // Safely destructure from userLogin
+  const userLogin = useSelector((state) => state.userLogin) || {};
+  const { userInfo } = userLogin;
 
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
 
   const logoutHandler = () => {
-    dispatch(logout());
-    navigate('/login');
+    dispatch({ type: 'USER_LOGOUT' });
   };
 
   return (
-    <ErrorBoundary>
-      <header>
-        <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
-          <Container>
-            <Link to="/">
-              <Navbar.Brand>Abay Garment</Navbar.Brand>
-            </Link>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="ml-auto">
-                <Link to="/cart" className="nav-link">
-                  <FontAwesomeIcon icon={faShoppingCart} /> Cart
-                  {cartItems.length > 0 && (
-                    <span className="badge badge-light ml-1">
-                      {cartItems.reduce((acc, item) => acc + item.qty, 0)}
-                    </span>
-                  )}
+    <header className="header">
+      <div className="header-container">
+        {/* Logo */}
+        <Link to="/" className="logo">
+          Abay <span>Garment</span>
+        </Link>
+
+        {/* Navigation Links */}
+        <nav className="nav-links">
+          {/* Cart Link */}
+          <Link to="/cart" className="nav-link">
+            <FontAwesomeIcon icon={faShoppingCart} /> Cart
+            {cartItems.length > 0 && (
+              <span className="cart-badge">
+                {cartItems.reduce((acc, item) => acc + item.qty, 0)}
+              </span>
+            )}
+          </Link>
+
+          {/* User Dropdown */}
+          {userInfo ? (
+            <div className="user-dropdown">
+              <span className="nav-link">
+                <FontAwesomeIcon icon={faUser} /> {userInfo.username}
+              </span>
+              <div className="dropdown-menu">
+                <Link to="/profile" className="dropdown-item">
+                  Profile
                 </Link>
-                {userInfo?.username ? (
-                  <NavDropdown title={userInfo.username} id="username">
-                    <Link to="/profile" className="dropdown-item">
-                      Profile
-                    </Link>
-                    <NavDropdown.Item onClick={logoutHandler}>
-                      Logout
-                    </NavDropdown.Item>
-                    {userInfo.role === 'admin' && (
-                      <>
-                        <Link to="/admin/userlist" className="dropdown-item">
-                          Users
-                        </Link>
-                        <Link to="/admin/productlist" className="dropdown-item">
-                          Products
-                        </Link>
-                        <Link to="/admin/orderlist" className="dropdown-item">
-                          Orders
-                        </Link>
-                      </>
-                    )}
-                  </NavDropdown>
-                ) : (
-                  <Link to="/login" className="nav-link">
-                    <FontAwesomeIcon icon={faUser} /> Sign In
-                  </Link>
-                )}
-              </Nav>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
-      </header>
-    </ErrorBoundary>
+                <button onClick={logoutHandler} className="dropdown-item">
+                  Logout
+                </button>
+              </div>
+            </div>
+          ) : (
+            <Link to="/login" className="nav-link">
+              <FontAwesomeIcon icon={faUser} /> Sign In
+            </Link>
+          )}
+
+          {/* Admin Dropdown */}
+          {userInfo && userInfo.role === 'admin' && (
+            <div className="admin-dropdown">
+              <span className="nav-link">Admin</span>
+              <div className="dropdown-menu">
+                <Link to="/admin/userlist" className="dropdown-item">
+                  Manage Users
+                </Link>
+                <Link to="/admin/productlist" className="dropdown-item">
+                  Manage Products
+                </Link>
+                <Link to="/admin/orderlist" className="dropdown-item">
+                  Manage Orders
+                </Link>
+              </div>
+            </div>
+          )}
+        </nav>
+
+        {/* Mobile Menu Button (Optional for small screens) */}
+        <button className="mobile-menu-btn">
+          <i className="fas fa-bars"></i>
+        </button>
+      </div>
+    </header>
   );
 };
 

@@ -1,4 +1,5 @@
 import asyncHandler from 'express-async-handler';
+import mongoose from 'mongoose'; // Import mongoose for ObjectId validation
 import Product from '../models/productModel.js';
 
 //  @desc    Fetch all products
@@ -10,11 +11,11 @@ const getProducts = asyncHandler(async (req, res) => {
 
   const keyword = req.query.keyword
     ? {
-      name: {
-        $regex: req.query.keyword,
-        $options: 'i',
-      },
-    }
+        name: {
+          $regex: req.query.keyword,
+          $options: 'i',
+        },
+      }
     : {};
 
   const count = await Product.countDocuments({ ...keyword });
@@ -29,6 +30,12 @@ const getProducts = asyncHandler(async (req, res) => {
 //  @route   GET /api/products/:id
 //  @access  Public
 const getProductById = asyncHandler(async (req, res) => {
+  // Validate the product ID
+  if (!mongoose.isValidObjectId(req.params.id)) {
+    res.status(400);
+    throw new Error('Invalid product ID format');
+  }
+
   const product = await Product.findById(req.params.id);
 
   if (product) {
@@ -43,6 +50,12 @@ const getProductById = asyncHandler(async (req, res) => {
 //  @route   DELETE /api/products/:id
 //  @access  Private/Admin
 const deleteProduct = asyncHandler(async (req, res) => {
+  // Validate the product ID
+  if (!mongoose.isValidObjectId(req.params.id)) {
+    res.status(400);
+    throw new Error('Invalid product ID format');
+  }
+
   const product = await Product.findById(req.params.id);
 
   if (product) {
@@ -62,7 +75,7 @@ const createProduct = asyncHandler(async (req, res) => {
     name: 'Sample name',
     price: 0,
     user: req.user._id,
-    image: '/images/sample.jpg',
+    image: req.body.image || '/images/sample.jpg', // Use the Cloudinary URL
     category: 'Sample category',
     countInStock: 0,
     numReviews: 0,
@@ -73,15 +86,12 @@ const createProduct = asyncHandler(async (req, res) => {
   res.status(201).json(createdProduct);
 });
 
-//  @desc    Update a product
-//  @route   PUT /api/products/:id
-//  @access  Private/Admin
 const updateProduct = asyncHandler(async (req, res) => {
   const {
     name,
     price,
     description,
-    image,
+    image, // Cloudinary URL
     category,
     countInStock,
   } = req.body;
@@ -92,7 +102,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.name = name;
     product.price = price;
     product.description = description;
-    product.image = image;
+    product.image = image; // Update with Cloudinary URL
     product.category = category;
     product.countInStock = countInStock;
 

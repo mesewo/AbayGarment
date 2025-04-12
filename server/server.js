@@ -10,6 +10,8 @@ import cors from 'cors';
 import path from 'path';
 import { fileURLToPath } from 'url'; // For __dirname
 import { dirname } from 'path'; // For __dirname
+import uploadRoutes from './routes/uploadRoutes.js';
+
 
 dotenv.config();
 
@@ -29,6 +31,9 @@ app.use(helmet());
 app.use(mongoSanitize());
 app.use(xss());
 app.use(hpp());
+
+
+app.use('/api/upload', uploadRoutes);
 
 // Set up CORS with credentials and origin from the .env file
 app.use(cors({
@@ -75,11 +80,12 @@ if (process.env.NODE_ENV === 'production') {
 
 // Optional: CORS Error Handling (if you want to log errors related to CORS)
 app.use((err, req, res, next) => {
-  if (err instanceof cors.CorsError) {
-    console.error('CORS error:', err);
-  }
-  next(err);
+  console.error(err.stack);
+  res.status(500).json({
+    message: err.message || 'Internal Server Error',
+  });
 });
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

@@ -1,58 +1,38 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faStarHalfAlt, faStar as faStarOutline } from '@fortawesome/free-solid-svg-icons';
+import './Rating.css';
 
-const Rating = ({ value, text }) => {
+const Rating = ({ value, text, color = '#f8e825' }) => {
   return (
     <div className="rating">
-      <span>
-        {value >= 1 ? (
-          <FontAwesomeIcon icon={faStar} />
-        ) : value >= 0.5 ? (
-          <FontAwesomeIcon icon={faStarHalfAlt} />
-        ) : (
-          <FontAwesomeIcon icon={faStarOutline} />
-        )}
-      </span>
-      <span>
-        {value >= 2 ? (
-          <FontAwesomeIcon icon={faStar} />
-        ) : value >= 1.5 ? (
-          <FontAwesomeIcon icon={faStarHalfAlt} />
-        ) : (
-          <FontAwesomeIcon icon={faStarOutline} />
-        )}
-      </span>
-      <span>
-        {value >= 3 ? (
-          <FontAwesomeIcon icon={faStar} />
-        ) : value >= 2.5 ? (
-          <FontAwesomeIcon icon={faStarHalfAlt} />
-        ) : (
-          <FontAwesomeIcon icon={faStarOutline} />
-        )}
-      </span>
-      <span>
-        {value >= 4 ? (
-          <FontAwesomeIcon icon={faStar} />
-        ) : value >= 3.5 ? (
-          <FontAwesomeIcon icon={faStarHalfAlt} />
-        ) : (
-          <FontAwesomeIcon icon={faStarOutline} />
-        )}
-      </span>
-      <span>
-        {value >= 5 ? (
-          <FontAwesomeIcon icon={faStar} />
-        ) : value >= 4.5 ? (
-          <FontAwesomeIcon icon={faStarHalfAlt} />
-        ) : (
-          <FontAwesomeIcon icon={faStarOutline} />
-        )}
-      </span>
-      <span>{text && text}</span>
+      {[1, 2, 3, 4, 5].map((index) => (
+        <span
+          key={index}
+          className={`rating-star ${
+            value >= index ? '' : value >= index - 0.5 ? 'half' : 'empty'
+          }`}
+          style={{ color }}
+        >
+          {value >= index ? (
+            <FontAwesomeIcon icon={faStar} />
+          ) : value >= index - 0.5 ? (
+            <FontAwesomeIcon icon={faStarHalfAlt} />
+          ) : (
+            <FontAwesomeIcon icon={faStarOutline} />
+          )}
+        </span>
+      ))}
+      {text && <span className="rating-text">{text}</span>}
     </div>
   );
+};
+
+Rating.propTypes = {
+  value: PropTypes.number, // Remove `.isRequired` to make it optional
+  text: PropTypes.string,
+  color: PropTypes.string,
 };
 
 export default Rating;

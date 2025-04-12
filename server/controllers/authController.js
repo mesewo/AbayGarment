@@ -84,19 +84,21 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
 
   if (user) {
-    user.username = req.body.username || user.username;
+    user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
     if (req.body.password) {
       user.password = req.body.password;
     }
+    user.profilePicture = req.body.profilePicture || user.profilePicture; // Update profile picture
 
     const updatedUser = await user.save();
 
     res.json({
       _id: updatedUser._id,
-      username: updatedUser.username,
+      name: updatedUser.name,
       email: updatedUser.email,
-      role: updatedUser.role,
+      isAdmin: updatedUser.isAdmin,
+      profilePicture: updatedUser.profilePicture, // Return updated profile picture
       token: generateToken(updatedUser._id),
     });
   } else {

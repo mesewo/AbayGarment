@@ -1,11 +1,11 @@
 import React from 'react';
-import { Alert } from 'react-bootstrap';
+import './ErrorMessage.css'; // Import the ErrorMessage.css file
 
 const ErrorMessage = ({ variant, children }) => {
   return (
-    <Alert variant={variant}>
+    <div className={`error-message ${variant}`}>
       {children}
-    </Alert>
+    </div>
   );
 };
 

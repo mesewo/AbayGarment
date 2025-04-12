@@ -1,15 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
+import axios from 'axios'; // Import axios for API calls
 
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    userInfo: null, //  Or you might have it as an empty object {}
+    userInfo: null, // Logged-in user info
     loading: false,
     error: null,
-    user: {}, //  For user details
-    success: false, //  For update profile success
+    user: {}, // User details for profile
+    success: false, // Profile update success flag
   },
   reducers: {
+    // Login Actions
     userLoginRequest: (state) => {
       state.loading = true;
     },
@@ -24,6 +26,8 @@ const userSlice = createSlice({
     userLogout: (state) => {
       state.userInfo = null;
     },
+
+    // Register Actions
     userRegisterRequest: (state) => {
       state.loading = true;
     },
@@ -35,6 +39,8 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+
+    // User Details Actions
     userDetailsRequest: (state) => {
       state.loading = true;
     },
@@ -46,6 +52,8 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+
+    // Update Profile Actions
     userUpdateProfileRequest: (state) => {
       state.loading = true;
     },
@@ -57,6 +65,10 @@ const userSlice = createSlice({
     userUpdateProfileFail: (state, action) => {
       state.loading = false;
       state.error = action.payload;
+    },
+    userUpdateProfileReset: (state) => {
+      state.success = false;
+      state.error = null;
     },
   },
 });
@@ -75,6 +87,37 @@ export const {
   userUpdateProfileRequest,
   userUpdateProfileSuccess,
   userUpdateProfileFail,
+  userUpdateProfileReset,
 } = userSlice.actions;
+
+// Thunk Action for Updating User Profile
+export const updateUserProfile = (user) => async (dispatch, getState) => {
+  try {
+    dispatch(userUpdateProfileRequest());
+
+    const {
+      user: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.put('/api/users/profile', user, config);
+
+    dispatch(userUpdateProfileSuccess(data));
+  } catch (error) {
+    dispatch(
+      userUpdateProfileFail(
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message
+      )
+    );
+  }
+};
 
 export default userSlice.reducer;

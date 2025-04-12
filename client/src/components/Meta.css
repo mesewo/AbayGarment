@@ -1,0 +1,24 @@
+/* Wrapper for debugging or future enhancements */
+.meta-wrapper {
+  display: none; /* Hide by default since Meta.js doesn't render visible elements */
+}
+
+/* Optional styles for debugging purposes */
+.meta-debug {
+  display: block;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: #f8f9fa;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: #495057;
+}
+
+/* Text styles for meta information */
+.meta-text {
+  font-weight: 600;
+  color: var(--primary);
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}

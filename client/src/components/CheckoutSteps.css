@@ -1,0 +1,44 @@
+.checkout-steps {
+    margin: 2rem 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    list-style-type: none;
+  }
+  
+  .checkout-steps .nav-item {
+    margin: 0 1rem;
+    position: relative;
+  }
+  
+  .checkout-steps .nav-link {
+    color: #6c757d;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+  
+  .checkout-steps .nav-link:not(.disabled) {
+    color: #28a745;
+    background-color: rgba(40, 167, 69, 0.1);
+  }
+  
+  .checkout-steps .nav-link.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  
+  .checkout-steps .nav-link:not(.disabled):hover {
+    background-color: rgba(40, 167, 69, 0.2);
+  }
+  
+  .checkout-steps .nav-item:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    right: -1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6c757d;
+  }

@@ -1,32 +1,69 @@
 import React from 'react';
-import { Card } from 'react-bootstrap';
 import Rating from './Rating';
 import { Link } from 'react-router-dom';
+import { LazyLoadImage } from 'react-lazy-load-image-component'; // Import LazyLoadImage
+import 'react-lazy-load-image-component/src/effects/blur.css'; // Import blur effect for lazy loading
+import './ProductCard.css'; // Import the ProductCard.css file
 
 const Product = ({ product }) => {
-  return (
-    <Card className="my-3 p-3 rounded">
-      <Link to={`/product/${product._id}`}>
-        <Card.Img src={product.image} variant="top" />
-      </Link>
+  const handleQuickView = () => {
+    // Logic for quick view (e.g., open a modal or navigate to product details)
+    console.log(`Quick View for product: ${product.name}`);
+  };
 
-      <Card.Body>
+  return (
+    <div className="product-card">
+      {/* Product Image */}
+      <div className="product-image-container">
         <Link to={`/product/${product._id}`}>
-          <Card.Title as="div">
-            <strong>{product.name}</strong>
-          </Card.Title>
+          <LazyLoadImage
+            src={product.image}
+            alt={product.name}
+            className="product-image"
+            effect="blur" // Apply blur effect while loading
+          />
+        </Link>
+        {/* Optional Badge (e.g., Sale, New Arrival, Discount) */}
+        {product.isNew && <span className="product-badge">New</span>}
+        {product.discount && (
+          <span className="product-badge discount">-{product.discount}%</span>
+        )}
+        {/* Quick View Button */}
+        <button className="quick-view-btn" onClick={handleQuickView}>
+          Quick View
+        </button>
+      </div>
+
+      {/* Product Content */}
+      <div className="product-content">
+        {/* Product Category (Optional) */}
+        {product.category && <div className="product-category">{product.category}</div>}
+
+        {/* Product Title */}
+        <Link to={`/product/${product._id}`} className="product-title">
+          {product.name}
         </Link>
 
-        <Card.Text as="div">
-          <Rating
-            value={product.rating}
-            text={`${product.numReviews} reviews`}
-          />
-        </Card.Text>
+        {/* Product Description (Optional) */}
+        {product.description && (
+          <div className="product-description">{product.description}</div>
+        )}
 
-        <Card.Text as="h3">${product.price}</Card.Text>
-      </Card.Body>
-    </Card>
+        {/* Product Footer */}
+        <div className="product-footer">
+          {/* Product Price */}
+          <div className="product-price">
+            ${product.price}
+            {product.oldPrice && <span className="old-price">${product.oldPrice}</span>}
+          </div>
+
+          {/* Product Rating */}
+          <div className="product-rating">
+            <Rating value={product.rating} text={`${product.numReviews} reviews`} />
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

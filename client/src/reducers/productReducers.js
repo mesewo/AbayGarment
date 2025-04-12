@@ -1,13 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const productSlice = createSlice({
-  name: 'product',
+// Product List Reducer
+const productListSlice = createSlice({
+  name: 'productList',
   initialState: {
     products: [],
-    product: { reviews: [] }, //  Initialize product as an object with reviews array
     loading: false,
     error: null,
-    success: false, //  For delete, create, update success flags
   },
   reducers: {
     productListRequest: (state) => {
@@ -22,6 +21,18 @@ const productSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+  },
+});
+
+// Product Details Reducer
+const productDetailsSlice = createSlice({
+  name: 'productDetails',
+  initialState: {
+    product: { reviews: [] },
+    loading: false,
+    error: null,
+  },
+  reducers: {
     productDetailsRequest: (state) => {
       state.loading = true;
     },
@@ -33,64 +44,6 @@ const productSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
-    productDeleteRequest: (state) => {
-      state.loading = true;
-    },
-    productDeleteSuccess: (state) => {
-      state.loading = false;
-      state.success = true;
-    },
-    productDeleteFail: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-    productCreateRequest: (state) => {
-      state.loading = true;
-    },
-    productCreateSuccess: (state, action) => {
-      state.loading = false;
-      state.success = true;
-      state.product = action.payload;
-    },
-    productCreateFail: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-    productUpdateRequest: (state) => {
-      state.loading = true;
-    },
-    productUpdateSuccess: (state, action) => {
-      state.loading = false;
-      state.success = true;
-      state.product = action.payload;
-    },
-    productUpdateFail: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-    productReviewCreateRequest: (state) => {
-      state.loading = true;
-    },
-    productReviewCreateSuccess: (state) => {
-      state.loading = false;
-      state.success = true;
-    },
-    productReviewCreateFail: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-    productTopRequest: (state) => {
-      state.loading = true;
-      state.products = [];
-    },
-    productTopSuccess: (state, action) => {
-      state.loading = false;
-      state.products = action.payload;
-    },
-    productTopFail: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
   },
 });
 
@@ -98,24 +51,13 @@ export const {
   productListRequest,
   productListSuccess,
   productListFail,
+} = productListSlice.actions;
+
+export const {
   productDetailsRequest,
   productDetailsSuccess,
   productDetailsFail,
-  productDeleteRequest,
-  productDeleteSuccess,
-  productDeleteFail,
-  productCreateRequest,
-  productCreateSuccess,
-  productCreateFail,
-  productUpdateRequest,
-  productUpdateSuccess,
-  productUpdateFail,
-  productReviewCreateRequest,
-  productReviewCreateSuccess,
-  productReviewCreateFail,
-  productTopRequest,
-  productTopSuccess,
-  productTopFail,
-} = productSlice.actions;
+} = productDetailsSlice.actions;
 
-export default productSlice.reducer;
+export const productListReducer = productListSlice.reducer;
+export const productDetailsReducer = productDetailsSlice.reducer;

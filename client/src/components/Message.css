@@ -1,0 +1,37 @@
+.message {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 4px;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  .message.danger {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+  }
+  
+  .message.success {
+    color: #155724;
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+  }
+  
+  .message.warning {
+    color: #856404;
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+  }
+  
+  .message.info {
+    color: #0c5460;
+    background-color: #d1ecf1;
+    border: 1px solid #bee5eb;
+  }
+  
+  .message.primary {
+    color: #004085;
+    background-color: #cce5ff;
+    border: 1px solid #b8daff;
+  }

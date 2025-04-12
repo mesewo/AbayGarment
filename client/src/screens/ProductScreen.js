@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Row,
@@ -13,12 +13,11 @@ import {
 import Rating from '../components/Rating';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
-import {
-  listProductDetails,
-  //  addToCart, //  Remove if you don't need it here
-} from '../actions/productActions';
+import { listProductDetails } from '../actions/productActions';
 
-const ProductScreen = ({ match, history, location }) => {
+const ProductScreen = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [qty, setQty] = useState(1);
 
   const dispatch = useDispatch();
@@ -27,14 +26,11 @@ const ProductScreen = ({ match, history, location }) => {
   const { loading, error, product } = productDetails;
 
   useEffect(() => {
-    dispatch(listProductDetails(match.params.id));
-  }, [dispatch, match]);
+    dispatch(listProductDetails(id));
+  }, [dispatch, id]);
 
   const addToCartHandler = () => {
-    //  Corrected:
-    //  If you want to dispatch the action:
-    //  dispatch(addToCart(match.params.id, qty));
-    history.push(`/cart/${match.params.id}?qty=${qty}`);
+    navigate(`/cart/${id}?qty=${qty}`);
   };
 
   return (
@@ -58,8 +54,8 @@ const ProductScreen = ({ match, history, location }) => {
               </ListGroup.Item>
               <ListGroup.Item>
                 <Rating
-                  value={product.rating}
-                  text={`${product.numReviews} reviews`}
+                  value={product.rating || 0} // Fallback to 0
+                  text={`${product.numReviews || 0} reviews`} // Fallback to 0 reviews
                 />
               </ListGroup.Item>
               <ListGroup.Item>Price: ${product.price}</ListGroup.Item>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom'; // Removed BrowserRouter import
+import { Routes, Route } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -23,9 +23,12 @@ import './App.css';
 const App = () => {
   return (
     <>
+      {/* Header */}
       <Header />
-      <main className="py-3">
-        <Container>
+
+      {/* Main Content */}
+      <main className="main py-3">
+        <Container className="container">
           <Routes>
             <Route path="/order/:id" element={<OrderScreen />} />
             <Route path="/shipping" element={<ShippingScreen />} />
@@ -38,16 +41,19 @@ const App = () => {
             <Route path="/cart/:id?" element={<CartScreen />} />
             <Route path="/admin/userlist" element={<UserListScreen />} />
             <Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
-            <Route path="/admin/productlist" element={<ProductListScreen />} />
+            <Route path="/admin/productlist" element={<ProductListScreen />} exact />
+            <Route path="/admin/productlist/:pageNumber" element={<ProductListScreen />} />
             <Route path="/admin/product/:id/edit" element={<ProductEditScreen />} />
             <Route path="/admin/orderlist" element={<OrderListScreen />} />
-            <Route path="/" element={<HomeScreen />} />
+            <Route path="/" element={<HomeScreen />} exact />
             <Route path="/search/:keyword" element={<HomeScreen />} />
             <Route path="/page/:pageNumber" element={<HomeScreen />} />
             <Route path="/search/:keyword/page/:pageNumber" element={<HomeScreen />} />
           </Routes>
         </Container>
       </main>
+
+      {/* Footer */}
       <Footer />
     </>
   );

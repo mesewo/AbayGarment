@@ -1,18 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit';
-import cartReducer from '../reducers/cartReducers'; // Adjust path if needed
-import orderReducer from '../reducers/orderReducers'; // Adjust path if needed
-import productReducer from '../reducers/productReducers'; // Adjust path if needed
-import userReducer from '../reducers/userReducers'; // Adjust path if needed
+import cartReducer from '../reducers/cartReducers';
+import orderReducer from '../reducers/orderReducers';
+import { productListReducer, productDetailsReducer } from '../reducers/productReducers'; // Import explicitly
+import userReducer from '../reducers/userReducers';
 
 const store = configureStore({
   reducer: {
     cart: cartReducer,
     order: orderReducer,
-    productList: productReducer,
+    productList: productListReducer, // Use the correct reducer
+    productDetails: productDetailsReducer, // Use the correct reducer
     user: userReducer,
   },
-  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([]), // Add any middleware here, e.g., thunk
-  devTools: process.env.NODE_ENV !== 'production', // Enable Redux DevTools in development
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
 export default store;
