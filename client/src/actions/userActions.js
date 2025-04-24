@@ -40,7 +40,9 @@ export const login = (email, password) => async (dispatch) => {
       '/api/users/login',
       { email, password },
       config
+      
     );
+    console.log('Login API Response:', data);
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
@@ -49,6 +51,7 @@ export const login = (email, password) => async (dispatch) => {
 
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
+    console.error('Login error:', error.response?.data?.message || error.message); // Log the error for debugging
     dispatch({
       type: USER_LOGIN_FAIL,
       payload:
@@ -62,7 +65,7 @@ export const login = (email, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
   localStorage.removeItem('userInfo');
   dispatch({ type: USER_LOGOUT });
-  //   document.location.href = '/login'; // might need to adjust this
+  document.location.href = '/login'; // might need to adjust this
 };
 
 export const register = (username, email, password) => async (dispatch) => {
@@ -94,6 +97,10 @@ export const register = (username, email, password) => async (dispatch) => {
     });
 
     localStorage.setItem('userInfo', JSON.stringify(data));
+
+        // Redirect to login after registration
+    window.location.href = '/login';
+
   } catch (error) {
     dispatch({
       type: USER_REGISTER_FAIL,

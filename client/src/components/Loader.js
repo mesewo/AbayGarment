@@ -1,19 +1,21 @@
 import React from 'react';
-import './Loader.css'; // Import the Loader.css file
 
-const Loader = ({ text = 'Loading...', size = 80, color = 'var(--primary)', withOverlay = true }) => {
+const Loader = ({ text = 'Loading...', size = 80, color = '#0d9488', withOverlay = true }) => {
   return (
-    <div className={`loader-container ${withOverlay ? 'with-overlay' : ''}`}>
+    <div className={`${withOverlay ? 'fixed inset-0 bg-white/80 z-50' : ''} flex flex-col items-center justify-center min-h-screen`}>
       <div
-        className="loader-spinner"
+        className="rounded-full border-4 border-t-transparent animate-spin"
         style={{
           width: `${size}px`,
           height: `${size}px`,
-          borderWidth: `${size / 10}px`,
-          borderTopColor: color,
+          borderColor: `${color} transparent transparent transparent`,
         }}
-      ></div>
-      {text && <div className="loader-text">{text}</div>}
+      />
+      {text && (
+        <div className="mt-4 text-lg text-gray-700 text-center animate-pulse">
+          {text}
+        </div>
+      )}
     </div>
   );
 };

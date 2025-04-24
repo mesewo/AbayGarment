@@ -1,17 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios'; // Import axios for API calls
 
-const userSlice = createSlice({
-  name: 'user',
+// User Login Slice
+const userLoginSlice = createSlice({
+  name: 'userLogin',
   initialState: {
     userInfo: null, // Logged-in user info
     loading: false,
     error: null,
-    user: {}, // User details for profile
-    success: false, // Profile update success flag
   },
   reducers: {
-    // Login Actions
     userLoginRequest: (state) => {
       state.loading = true;
     },
@@ -26,8 +24,18 @@ const userSlice = createSlice({
     userLogout: (state) => {
       state.userInfo = null;
     },
+  },
+});
 
-    // Register Actions
+// User Register Slice
+const userRegisterSlice = createSlice({
+  name: 'userRegister',
+  initialState: {
+    userInfo: null,
+    loading: false,
+    error: null,
+  },
+  reducers: {
     userRegisterRequest: (state) => {
       state.loading = true;
     },
@@ -39,21 +47,18 @@ const userSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+  },
+});
 
-    // User Details Actions
-    userDetailsRequest: (state) => {
-      state.loading = true;
-    },
-    userDetailsSuccess: (state, action) => {
-      state.loading = false;
-      state.user = action.payload;
-    },
-    userDetailsFail: (state, action) => {
-      state.loading = false;
-      state.error = action.payload;
-    },
-
-    // Update Profile Actions
+// User Profile Update Slice
+const userUpdateProfileSlice = createSlice({
+  name: 'userUpdateProfile',
+  initialState: {
+    success: false,
+    loading: false,
+    error: null,
+  },
+  reducers: {
     userUpdateProfileRequest: (state) => {
       state.loading = true;
     },
@@ -73,22 +78,28 @@ const userSlice = createSlice({
   },
 });
 
+// Export actions for user login
 export const {
   userLoginRequest,
   userLoginSuccess,
   userLoginFail,
   userLogout,
+} = userLoginSlice.actions;
+
+// Export actions for user registration
+export const {
   userRegisterRequest,
   userRegisterSuccess,
   userRegisterFail,
-  userDetailsRequest,
-  userDetailsSuccess,
-  userDetailsFail,
+} = userRegisterSlice.actions;
+
+// Export actions for user profile update
+export const {
   userUpdateProfileRequest,
   userUpdateProfileSuccess,
   userUpdateProfileFail,
   userUpdateProfileReset,
-} = userSlice.actions;
+} = userUpdateProfileSlice.actions;
 
 // Thunk Action for Updating User Profile
 export const updateUserProfile = (user) => async (dispatch, getState) => {
@@ -96,7 +107,7 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
     dispatch(userUpdateProfileRequest());
 
     const {
-      user: { userInfo },
+      userLogin: { userInfo },
     } = getState();
 
     const config = {
@@ -120,4 +131,11 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
   }
 };
 
-export default userSlice.reducer;
+// Combine reducers for export
+const userReducers = {
+  userLogin: userLoginSlice.reducer,
+  userRegister: userRegisterSlice.reducer,
+  userUpdateProfile: userUpdateProfileSlice.reducer,
+};
+
+export default userReducers;

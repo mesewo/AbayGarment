@@ -1,70 +1,114 @@
 import React from 'react';
-import './Footer.css'; // Import the Footer.css file
-import { Container, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { FaFacebookF, FaTwitter, FaInstagram, FaMapMarkerAlt, FaPhone, FaEnvelope } from 'react-icons/fa';
 
 const Footer = () => {
   return (
-    <footer className="footer">
-      <Container className="footer-container">
-        <Row className="footer-grid">
-          <Col>
-            <h2 className="footer-logo">
-              Abay <span>Garment</span>
+    <footer className="bg-gray-900 text-white pt-12 pb-6">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+          {/* About Section */}
+          <div>
+            <h2 className="text-3xl font-bold mb-4">
+              Abay <span className="text-yellow-500">Garment</span>
             </h2>
-            <p className="footer-about">
+            <p className="text-gray-400 leading-relaxed mb-4">
               Abay Garment is dedicated to providing high-quality garments inspired by the beauty and flow of the Abay River.
             </p>
-            <div className="footer-social">
-              <a href="https://facebook.com" className="social-icon" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-facebook-f"></i>
+            <div className="flex space-x-4">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-10 h-10 bg-gray-800 rounded-full text-white hover:bg-yellow-500 transition"
+              >
+                <FaFacebookF />
               </a>
-              <a href="https://twitter.com" className="social-icon" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-twitter"></i>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-10 h-10 bg-gray-800 rounded-full text-white hover:bg-yellow-500 transition"
+              >
+                <FaTwitter />
               </a>
-              <a href="https://instagram.com" className="social-icon" target="_blank" rel="noopener noreferrer">
-                <i className="fab fa-instagram"></i>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-10 h-10 bg-gray-800 rounded-full text-white hover:bg-yellow-500 transition"
+              >
+                <FaInstagram />
               </a>
             </div>
-          </Col>
-          <Col>
-            <h3 className="footer-heading">Quick Links</h3>
-            <ul className="footer-links">
-              <li className="footer-link-item">
-                <a href="/" className="footer-link">Home</a>
+          </div>
+
+          {/* Quick Links Section */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 pb-2 border-b border-yellow-500 inline-block">
+              Quick Links
+            </h3>
+            <ul className="space-y-3">
+              <li>
+                <Link
+                  to="/"
+                  className="text-gray-400 hover:text-yellow-500 transition"
+                >
+                  Home
+                </Link>
               </li>
-              <li className="footer-link-item">
-                <a href="/shop" className="footer-link">Shop</a>
+              <li>
+                <Link
+                  to="/shop"
+                  className="text-gray-400 hover:text-yellow-500 transition"
+                >
+                  Shop
+                </Link>
               </li>
-              <li className="footer-link-item">
-                <a href="/about" className="footer-link">About Us</a>
+              <li>
+                <Link
+                  to="/about"
+                  className="text-gray-400 hover:text-yellow-500 transition"
+                >
+                  About Us
+                </Link>
               </li>
-              <li className="footer-link-item">
-                <a href="/contact" className="footer-link">Contact</a>
+              <li>
+                <Link
+                  to="/contact"
+                  className="text-gray-400 hover:text-yellow-500 transition"
+                >
+                  Contact
+                </Link>
               </li>
             </ul>
-          </Col>
-          <Col>
-            <h3 className="footer-heading">Contact Us</h3>
-            <div className="footer-contact-item">
-              <i className="fas fa-map-marker-alt contact-icon"></i>
-              <span>123 Abay Street, Addis Ababa, Ethiopia</span>
+          </div>
+
+          {/* Contact Section */}
+          <div>
+            <h3 className="text-lg font-semibold mb-4 pb-2 border-b border-yellow-500 inline-block">
+              Contact Us
+            </h3>
+            <div className="flex items-start mb-4">
+              <FaMapMarkerAlt className="text-yellow-500 mr-3 mt-1" />
+              <span className="text-gray-400">123 Abay Street, Addis Ababa, Ethiopia</span>
             </div>
-            <div className="footer-contact-item">
-              <i className="fas fa-phone contact-icon"></i>
-              <span>+251 123 456 789</span>
+            <div className="flex items-start mb-4">
+              <FaPhone className="text-yellow-500 mr-3 mt-1" />
+              <span className="text-gray-400">+251 123 456 789</span>
             </div>
-            <div className="footer-contact-item">
-              <i className="fas fa-envelope contact-icon"></i>
-              <span>info@abaygarment.com</span>
+            <div className="flex items-start">
+              <FaEnvelope className="text-yellow-500 mr-3 mt-1" />
+              <span className="text-gray-400">info@abaygarment.com</span>
             </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col className="footer-bottom">
-            Copyright &copy; Abay Garment {new Date().getFullYear()}
-          </Col>
-        </Row>
-      </Container>
+          </div>
+        </div>
+
+        {/* Footer Bottom */}
+        <div className="text-center border-t border-gray-800 pt-4 text-gray-500 text-sm">
+          &copy; {new Date().getFullYear()} Abay Garment. All Rights Reserved.
+        </div>
+      </div>
     </footer>
   );
 };

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Form, Button } from 'react-bootstrap';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
 import axios from 'axios';
-import './ProfileScreen.css'; // Import the CSS file
 
 const ProfileScreen = () => {
   const [name, setName] = useState('');
@@ -50,13 +48,9 @@ const ProfileScreen = () => {
 
     try {
       const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
+        headers: { 'Content-Type': 'multipart/form-data' },
       };
-
       const { data } = await axios.post('/api/upload/user', formData, config);
-
       setProfilePicture(data.imageUrl);
       setUploading(false);
     } catch (error) {
@@ -83,75 +77,85 @@ const ProfileScreen = () => {
   };
 
   return (
-    <Row>
-      <Col md={3} className="profile-container">
-        <h2>User Profile</h2>
-        {error && <Message variant="danger" className="message-error">{error}</Message>}
-        {success && <Message variant="success" className="message-success">Profile Updated</Message>}
-        {loading && <Loader className="loader" />}
-        <Form onSubmit={submitHandler} className="profile-form">
-          <Form.Group controlId="name">
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type="name"
+    <div className="flex justify-center items-start p-6">
+      <div className="w-full max-w-xl bg-gray-50 rounded-lg shadow-md p-6">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-4">User Profile</h2>
+
+        {error && <Message variant="danger" className="text-red-600 font-semibold mb-3">{error}</Message>}
+        {success && <Message variant="success" className="text-green-600 font-semibold mb-3">Profile Updated</Message>}
+        {loading && <Loader />}
+
+        <form onSubmit={submitHandler} className="flex flex-col gap-4">
+          <div>
+            <label className="block font-medium text-gray-700 mb-1">Name</label>
+            <input
+              type="text"
               placeholder="Enter name"
               value={name}
               onChange={(e) => setName(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+          </div>
 
-          <Form.Group controlId="email">
-            <Form.Label>Email Address</Form.Label>
-            <Form.Control
+          <div>
+            <label className="block font-medium text-gray-700 mb-1">Email Address</label>
+            <input
               type="email"
               placeholder="Enter email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+          </div>
 
-          <Form.Group controlId="password">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
+          <div>
+            <label className="block font-medium text-gray-700 mb-1">Password</label>
+            <input
               type="password"
               placeholder="Enter password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+          </div>
 
-          <Form.Group controlId="confirmPassword">
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
+          <div>
+            <label className="block font-medium text-gray-700 mb-1">Confirm Password</label>
+            <input
               type="password"
               placeholder="Confirm password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-            ></Form.Control>
-          </Form.Group>
+              className="w-full border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+          </div>
 
-          <Form.Group controlId="profilePicture" className="profile-picture-upload">
-            <Form.Label>Profile Picture</Form.Label>
-            <Form.Control
+          <div>
+            <label className="block font-medium text-gray-700 mb-1">Profile Picture</label>
+            <input
               type="text"
               placeholder="Enter profile picture URL"
               value={profilePicture}
               onChange={(e) => setProfilePicture(e.target.value)}
-            ></Form.Control>
-            <Form.Control
+              className="w-full border border-gray-300 rounded-md p-2 mb-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+            <input
               type="file"
-              label="Choose File"
               onChange={uploadFileHandler}
-            ></Form.Control>
+              className="w-full border border-gray-300 rounded-md p-2 text-gray-700 cursor-pointer"
+            />
             {uploading && <Loader />}
-          </Form.Group>
+          </div>
 
-          <Button type="submit" variant="primary">
+          <button
+            type="submit"
+            className="bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition-colors"
+          >
             Update
-          </Button>
-        </Form>
-      </Col>
-    </Row>
+          </button>
+        </form>
+      </div>
+    </div>
   );
 };
 

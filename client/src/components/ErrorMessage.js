@@ -1,16 +1,18 @@
 import React from 'react';
-import './ErrorMessage.css'; // Import the ErrorMessage.css file
 
-const ErrorMessage = ({ variant, children }) => {
+const ErrorMessage = ({ variant = 'danger', children }) => {
+  const variantStyles = {
+    danger: 'text-red-700 bg-red-100 border-red-300',
+    success: 'text-green-700 bg-green-100 border-green-300',
+    warning: 'text-yellow-700 bg-yellow-100 border-yellow-300',
+    info: 'text-blue-700 bg-blue-100 border-blue-300',
+  };
+
   return (
-    <div className={`error-message ${variant}`}>
+    <div className={`px-4 py-2 mb-4 border rounded-md ${variantStyles[variant]}`}>
       {children}
     </div>
   );
-};
-
-ErrorMessage.defaultProps = {
-  variant: 'danger', // Default style is set to 'danger' for error messages
 };
 
 export default ErrorMessage;

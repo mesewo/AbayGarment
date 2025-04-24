@@ -1,3 +1,8 @@
+import userRoutes from './routes/userRoutes.js';
+import productRoutes from './routes/productRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
+// import paymentRoutes from './routes/paymentRoutes.js'; // Uncomment if needed
+import adminRoutes from './routes/adminRoutes.js';
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -16,7 +21,7 @@ import uploadRoutes from './routes/uploadRoutes.js';
 dotenv.config();
 
 const app = express();
-
+const __dirname = path.resolve();
 // Database connection
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
@@ -32,6 +37,8 @@ app.use(mongoSanitize());
 app.use(xss());
 app.use(hpp());
 
+
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.use('/api/upload', uploadRoutes);
 
@@ -55,11 +62,6 @@ app.use('/api', limiter);
 app.use(express.json());
 
 // Routes
-import userRoutes from './routes/userRoutes.js';
-import productRoutes from './routes/productRoutes.js';
-import orderRoutes from './routes/orderRoutes.js';
-// import paymentRoutes from './routes/paymentRoutes.js'; // Uncomment if needed
-import adminRoutes from './routes/adminRoutes.js';
 
 app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);

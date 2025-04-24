@@ -20,7 +20,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Poppins', sans-serif; /* Updated to use Poppins */
   line-height: 1.6;
   background-color: var(--light-gray);
   color: var(--dark);

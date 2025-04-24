@@ -1,26 +1,4 @@
-.rating {
-    display: flex;
-    align-items: center;
-    margin: 0.5rem 0;
-  }
-  
-  .rating-star {
-    font-size: 1.2rem;
-    color: #f8e825;
-    margin-right: 0.1rem;
-  }
-  
-  .rating-text {
-    margin-left: 0.5rem;
-    font-size: 0.9rem;
-    color: #6c757d;
-  }
-  
-  .rating-star.empty {
-    color: #ccc;
-  }
-  
-  .rating-star.half::before {
-    content: "\f089";
-    position: absolute;
-  }
+.rating-star.half::before {
+  content: "\f089";
+  position: absolute;
+}

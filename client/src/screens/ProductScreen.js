@@ -12,8 +12,9 @@ import {
 } from 'react-bootstrap';
 import Rating from '../components/Rating';
 import Message from '../components/Message';
-import Loader from '../components/Loader';
+// import Loader from '../components/Loader';
 import { listProductDetails } from '../actions/productActions';
+import ProductSkeleton from '../components/ProductSkeleton'; // Import skeleton loader
 
 const ProductScreen = () => {
   const { id } = useParams();
@@ -39,7 +40,8 @@ const ProductScreen = () => {
         Go Back
       </Link>
       {loading ? (
-        <Loader />
+        // Show the skeleton loader when loading
+        <ProductSkeleton />
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (

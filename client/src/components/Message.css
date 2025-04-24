@@ -1,37 +1,24 @@
+/* TailwindCSS handles most of the styles, so the .message class can be minimal */
 .message {
-    margin: 1rem 0;
-    padding: 1rem;
-    border-radius: 4px;
-    font-size: 1rem;
-    line-height: 1.5;
-  }
-  
-  .message.danger {
-    color: #721c24;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
-  }
-  
-  .message.success {
-    color: #155724;
-    background-color: #d4edda;
-    border: 1px solid #c3e6cb;
-  }
-  
-  .message.warning {
-    color: #856404;
-    background-color: #fff3cd;
-    border: 1px solid #ffeeba;
-  }
-  
-  .message.info {
-    color: #0c5460;
-    background-color: #d1ecf1;
-    border: 1px solid #bee5eb;
-  }
-  
-  .message.primary {
-    color: #004085;
-    background-color: #cce5ff;
-    border: 1px solid #b8daff;
-  }
+  @apply my-4 py-4 px-6 rounded-md text-base leading-relaxed;
+}
+
+.message.danger {
+  @apply text-red-800 bg-red-100 border border-red-200;
+}
+
+.message.success {
+  @apply text-green-800 bg-green-100 border border-green-200;
+}
+
+.message.warning {
+  @apply text-yellow-800 bg-yellow-100 border border-yellow-200;
+}
+
+.message.info {
+  @apply text-blue-800 bg-blue-100 border border-blue-200;
+}
+
+.message.primary {
+  @apply text-blue-900 bg-blue-200 border border-blue-300;
+}
